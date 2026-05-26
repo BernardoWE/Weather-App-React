@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton
  } from './style.js'
 
 import IconUnits from '../../assets/images/icon-units.svg'
@@ -140,7 +140,7 @@ function App() {
           <img src={IconSearch} alt="Search icon" />
           <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" />
         </SearchInputWrapper>
-        <button>Search</button>
+        <SearchButton>Search</SearchButton>
       </SearchContainer>
 
       Feels like

@@ -7,6 +7,8 @@ export const Colors = {
     blue300:'hsl(240, 6%, 70%)',
     blue200:'hsl(250, 6%, 84%)',
     blue0:'hsl(0, 0%, 100%)',
+    lightBlue:'hsl(233, 67%, 56%)',
+    lightBlue700:'hsl(248, 70%, 36%)',
 }
 export const Main = styled.main`
     padding: 3rem 5rem;
@@ -92,12 +94,13 @@ export const SearchContainer = styled.div`
     display: flex;
     gap: 1rem;
     justify-content: center;
+    margin-top: 2rem;
 `
 export const SearchInputWrapper = styled.label`
     display: flex;
     align-items: center;
     background-color: ${Colors.blue800};
-    border-radius: 8px;
+    border-radius: 10px;
     padding: .8rem;
     gap:0.5rem;
     cursor: text;
@@ -113,5 +116,18 @@ export const SearchInput = styled.input`
     color: ${Colors.blue0};
     &::placeholder{
         color: ${Colors.blue300};
+    }
+`
+export const SearchButton = styled.button`
+    background-color: ${Colors.lightBlue};
+    border: none;
+    border-radius: 10px;
+    color: ${Colors.blue0};
+    padding: .8rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover{
+        background-color: ${Colors.lightBlue700};
+        
     }
 `
