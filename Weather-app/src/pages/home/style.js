@@ -11,6 +11,12 @@ export const Colors = {
 export const Main = styled.main`
     padding: 3rem 5rem;
     min-height: 100vh ;
+    h1{
+        color: ${Colors.blue0};
+        margin: 0 auto;
+        width: fit-content;
+        font-size: 3rem;
+    }
 `
 export const Header = styled.header`
     display: flex;
@@ -81,4 +87,31 @@ export const Button = styled.button`
         ${props => props.$isActive ? `1px solid #fff` : `none`};
     }
     
+`
+export const SearchContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+`
+export const SearchInputWrapper = styled.label`
+    display: flex;
+    align-items: center;
+    background-color: ${Colors.blue800};
+    border-radius: 8px;
+    padding: .8rem;
+    gap:0.5rem;
+    cursor: text;
+    
+    /* width: clamp(200px, 20vw, 400px); */
+    width: 400px;
+`
+export const SearchInput = styled.input`
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    outline:none;
+    color: ${Colors.blue0};
+    &::placeholder{
+        color: ${Colors.blue300};
+    }
 `

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits } from './style.js'
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput
+ } from './style.js'
 
 import IconUnits from '../../assets/images/icon-units.svg'
 import IconDropdown from '../../assets/images/icon-dropdown.svg'
 import IconCheckMark from '../../assets/images/icon-checkmark.svg'
+import IconSearch from '../../assets/images/icon-search.svg'
 import logo from '../../assets/images/logo.svg'
 
 function App() {
@@ -133,9 +135,13 @@ function App() {
 
 
       <h1>How's the sky looking today?</h1>
-
-      Search for a city, e.g., New York
-      Search
+      <SearchContainer>
+        <SearchInputWrapper htmlFor='search-input'>
+          <img src={IconSearch} alt="Search icon" />
+          <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" />
+        </SearchInputWrapper>
+        <button>Search</button>
+      </SearchContainer>
 
       Feels like
       {/* <!-- Insert temperature here --> */}
