@@ -101,12 +101,15 @@ export const SearchInputWrapper = styled.label`
     align-items: center;
     background-color: ${Colors.blue800};
     border-radius: 10px;
-    padding: .8rem;
+    padding: 1rem;
     gap:0.5rem;
     cursor: text;
-    
-    /* width: clamp(200px, 20vw, 400px); */
-    width: 500px;
+    flex-shrink: 0;
+    width: clamp(200px, 50vw, 500px);
+    /* width: 500px; */
+    &:hover{
+        background-color: ${Colors.blue700};
+    }
 `
 export const SearchInput = styled.input`
     background-color: transparent;
@@ -117,6 +120,7 @@ export const SearchInput = styled.input`
     &::placeholder{
         color: ${Colors.blue300};
     }
+    
 `
 export const SearchButton = styled.button`
     background-color: ${Colors.lightBlue};
@@ -133,4 +137,8 @@ export const SearchButton = styled.button`
     &:active{
         transform: scale(0.98);
     }
+`
+export const WeatherInfoContainer = styled.div`
+    display: flex;
+
 `

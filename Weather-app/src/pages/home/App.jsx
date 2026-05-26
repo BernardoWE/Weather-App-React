@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer
  } from './style.js'
-
+import WeatherInfoCard from '../../components/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
 import IconDropdown from '../../assets/images/icon-dropdown.svg'
 import IconCheckMark from '../../assets/images/icon-checkmark.svg'
@@ -142,12 +142,12 @@ function App() {
         </SearchInputWrapper>
         <SearchButton>Search</SearchButton>
       </SearchContainer>
-
-      Feels like
-      {/* <!-- Insert temperature here --> */}
-
-      Humidity
-      {/* <!-- Insert humidity here --> */}
+      <WeatherInfoContainer>
+        <WeatherInfoCard title='Feels like' value='22°C' />
+        <WeatherInfoCard title='Humidity' value='65%' />
+        <WeatherInfoCard title='Wind' value='10 km/h' />
+        <WeatherInfoCard title='Precipitation' value='0 mm' />
+      </WeatherInfoContainer>
 
       Wind
       {/* <!-- Insert wind here -->    */}
