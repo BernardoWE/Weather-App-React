@@ -6,6 +6,7 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
   }
   body{
     background-color: ${Colors.blue900};

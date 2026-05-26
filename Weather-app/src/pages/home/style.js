@@ -17,7 +17,7 @@ export const Main = styled.main`
         color: ${Colors.blue0};
         margin: 0 auto;
         width: fit-content;
-        font-size: 3rem;
+        font-size: 4rem;
     }
 `
 export const Header = styled.header`
@@ -59,7 +59,7 @@ export const ButtonUnits = styled.button`
     border: none;
     border-radius: 8px;
     padding: .7rem;
-    gap: .7em;
+    gap: .9em;
     /* width: 100%; */
     color: ${Colors.blue0};
     cursor: pointer;
@@ -106,7 +106,7 @@ export const SearchInputWrapper = styled.label`
     cursor: text;
     
     /* width: clamp(200px, 20vw, 400px); */
-    width: 400px;
+    width: 500px;
 `
 export const SearchInput = styled.input`
     background-color: transparent;
@@ -129,5 +129,8 @@ export const SearchButton = styled.button`
     &:hover{
         background-color: ${Colors.lightBlue700};
         
+    }
+    &:active{
+        transform: scale(0.98);
     }
 `
