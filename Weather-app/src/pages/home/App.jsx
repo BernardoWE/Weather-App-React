@@ -1,13 +1,21 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer
  } from './style.js'
 import WeatherInfoCard from '../../components/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
 import IconDropdown from '../../assets/images/icon-dropdown.svg'
 import IconCheckMark from '../../assets/images/icon-checkmark.svg'
 import IconSearch from '../../assets/images/icon-search.svg'
+import SunnyIcon from '../../assets/images/icon-sunny.webp'
+import DrizzleIcon from '../../assets/images/icon-drizzle.webp'
+import FogIcon from '../../assets/images/icon-fog.webp'
+import OvercastIcon from '../../assets/images/icon-overcast.webp'
+import PartlyCloudyIcon from '../../assets/images/icon-partly-cloudy.webp'
+import RainIcon from '../../assets/images/icon-rain.webp'
+import SnowIcon from '../../assets/images/icon-snow.webp'
+import StormIcon from '../../assets/images/icon-storm.webp'
 import logo from '../../assets/images/logo.svg'
 
 function App() {
@@ -16,7 +24,142 @@ function App() {
   const [temperatureUnit, setTemperatureUnit] = useState('Celsius')
   const [windSpeedUnit, setWindSpeedUnit] = useState('km/h')
   const [precipitationUnit, setPrecipitationUnit] = useState('mm')
+  const [city, setCity] = useState('')
+  const [weatherData, setWeatherData] = useState('')
 
+  const weatherCodes = {
+  // Clear / sunny
+  0: {
+    text: "Clear sky",
+    image: SunnyIcon
+  },
+
+  // Partly cloudy
+  1: {
+    text: "Mainly clear",
+    image: PartlyCloudyIcon
+  },
+
+  2: {
+    text: "Partly cloudy",
+    image: PartlyCloudyIcon
+  },
+
+  // Overcast
+  3: {
+    text: "Overcast",
+    image: OvercastIcon
+  },
+
+  // Fog
+  45: {
+    text: "Fog",
+    image: FogIcon
+  },
+
+  48: {
+    text: "Rime fog",
+    image: FogIcon
+  },
+
+  // Drizzle
+  51: {
+    text: "Light drizzle",
+    image: DrizzleIcon
+  },
+
+  53: {
+    text: "Moderate drizzle",
+    image: DrizzleIcon
+  },
+
+  55: {
+    text: "Dense drizzle",
+    image: DrizzleIcon
+  },
+
+  // Rain
+  61: {
+    text: "Slight rain",
+    image: RainIcon
+  },
+
+  63: {
+    text: "Moderate rain",
+    image: RainIcon
+  },
+
+  65: {
+    text: "Heavy rain",
+    image: RainIcon
+  },
+
+  80: {
+    text: "Rain showers",
+    image: RainIcon
+  },
+
+  81: {
+    text: "Moderate rain showers",
+    image: RainIcon
+  },
+
+  82: {
+    text: "Violent rain showers",
+    image: RainIcon
+  },
+
+  // Snow
+  71: {
+    text: "Slight snow",
+    image: SnowIcon
+  },
+
+  73: {
+    text: "Moderate snow",
+    image: SnowIcon
+  },
+
+  75: {
+    text: "Heavy snow",
+    image: SnowIcon
+  },
+
+  // Storm
+  95: {
+    text: "Thunderstorm",
+    image: StormIcon
+  },
+
+  96: {
+    text: "Thunderstorm with hail",
+    image: StormIcon
+  },
+
+  99: {
+    text: "Heavy thunderstorm with hail",
+    image: StormIcon
+  }
+  }
+
+  async function handleSearch() {
+     const geoResponse = await fetch(
+    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
+  )
+  const geoData = await geoResponse.json()
+  const latitude = geoData.results[0].latitude
+  const longitude = geoData.results[0].longitude
+
+   const weatherResponse = await fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,precipitation&temperature_unit=${isImperial ? 'fahrenheit' : 'celsius'}&windspeed_unit=${isImperial ? 'mph' : 'kmh'}&precipitation_unit=${isImperial ? 'inch' : 'mm'}&timezone=auto`
+  )
+  
+  const dataResponse = await weatherResponse.json()
+  console.log(dataResponse)
+  setWeatherData(dataResponse)
+  
+  }
+  
   return (
     <Main>
 
@@ -138,17 +281,55 @@ function App() {
       <SearchContainer>
         <SearchInputWrapper htmlFor='search-input'>
           <img src={IconSearch} alt="Search icon" />
-          <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" />
+          <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" value={city} onChange={(e) => setCity(e.target.value)} />
         </SearchInputWrapper>
-        <SearchButton>Search</SearchButton>
+        <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchContainer>
       <WeatherInfoContainer>
-        <WeatherInfoCard title='Feels like' value='22°C' />
-        <WeatherInfoCard title='Humidity' value='65%' />
-        <WeatherInfoCard title='Wind' value='10 km/h' />
-        <WeatherInfoCard title='Precipitation' value='0 mm' />
+        <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature } units={weatherData?.current_units?.apparent_temperature} />
+
+        <WeatherInfoCard title='Humidity' value={weatherData?.current?.relative_humidity_2m} units={weatherData?.current_units?.relative_humidity_2m} />
+
+        <WeatherInfoCard title='Wind' value={weatherData?.current?.wind_speed_10m} units={weatherData?.current_units?.wind_speed_10m} />
+
+        <WeatherInfoCard title='Precipitation' value={weatherData?.current?.precipitation} units={weatherData?.current_units?.precipitation} />
       </WeatherInfoContainer>
 
+        <h2>Daily forecast</h2>
+        <DailyForecastContainer>
+
+       
+      {weatherData?.daily?.time.map( (day, index) => {
+        const dayName = new Date(day).toLocaleDateString(
+    "en-US",
+    { weekday: "short" }
+  )
+        return(
+      <DailyForecast  
+      key={day} >
+
+        <p>{dayName}</p>
+        <img src={weatherCodes[weatherData.daily.weather_code[index]].image} alt="" />
+          {/* <img src={SunnyIcon} alt="" /> */}
+        <p>
+          
+          {weatherData.daily.temperature_2m_max[index]}
+          {weatherData.daily_units.temperature_2m_max}
+        </p>
+        <p>
+          
+          {weatherData.daily.temperature_2m_min[index]}
+          {weatherData.daily_units.temperature_2m_min}
+        </p>
+
+      </DailyForecast>
+    )})}
+     </DailyForecastContainer>
+
+          {/* <div style={{backgroundColor:'red', width:'100px', height:'100px'}}>
+              <p>{weatherData?.daily?.temperature_2m_max[0]}</p>
+              <p><strong>{weatherData?.daily?.temperature_2m_min[0]} </strong></p>
+          </div> */}
       Wind
       {/* <!-- Insert wind here -->    */}
 

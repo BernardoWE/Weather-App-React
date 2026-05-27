@@ -2,11 +2,11 @@ import {Card}  from "./style.js"
 
 
 
-function WeatherInfoCard({title, value}){
+function WeatherInfoCard({title, value, units}){
     return(
         <Card>
             <p>{title}</p>
-            <p><strong>{value}</strong></p>
+            <p><strong>{value} {units}</strong></p>
         </Card>
     )
 }

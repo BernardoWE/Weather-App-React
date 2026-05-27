@@ -19,6 +19,7 @@ export const Main = styled.main`
         width: fit-content;
         font-size: 4rem;
     }
+    
 `
 export const Header = styled.header`
     display: flex;
@@ -135,10 +136,27 @@ export const SearchButton = styled.button`
         
     }
     &:active{
-        transform: scale(0.98);
+        transform: scale(0.
+            98);
     }
 `
 export const WeatherInfoContainer = styled.div`
     display: flex;
-
+    flex-wrap: wrap;
+`
+export const DailyForecast = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: ${Colors.blue800};
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0.5rem;
+    color: ${Colors.blue0};
+    img{
+        width: 50px;
+    }
+`
+export const DailyForecastContainer = styled.div`
+display: flex;
+gap:1rem;
 `
