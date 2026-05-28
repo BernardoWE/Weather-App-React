@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import todayBg from '../../assets/images/bg-today-large.svg'
 export const Colors = {
     blue900:'hsl(243, 96%, 9%)',
     blue800:'hsl(243, 27%, 20%)',
@@ -143,20 +144,83 @@ export const SearchButton = styled.button`
 export const WeatherInfoContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
+    grid-area: 3 / 1 / 4 / 4;
 `
 export const DailyForecast = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     background-color: ${Colors.blue800};
     border-radius: 10px;
     padding: 1rem;
-    margin: 0.5rem;
+    /* margin: 0.5rem; */
     color: ${Colors.blue0};
+    flex: 1;
+    min-width: 100px;
+    flex-wrap: wrap;
+    .daily-div-temperature{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
     img{
-        width: 50px;
+        width: 70px;
     }
 `
 export const DailyForecastContainer = styled.div`
 display: flex;
-gap:1rem;
+gap:1em;
+flex-wrap: wrap;
+ grid-area: 4 / 1 / 6 / 4;
+`
+export const TodayWeather = styled.div`
+    background-image: url(${todayBg});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    grid-area: 1 / 1 / 3 / 4;
+    height: 300px;
+    border-radius: 20px;
+`
+export const HourlyForecast = styled.div`
+    grid-area: 1 / 4 / 6 / 6;
+    background-color: ${Colors.blue800};
+    border-radius: 10px;
+    padding: 1rem;
+    /* margin: 0.5rem; */
+    position: relative;
+    .hourly-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+`
+export const WeatherGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 30px;
+`
+export const DropdownDaysMenu = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 1rem;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    padding: 10px;
+    background-color: ${Colors.blue800};
+   /* border: 1px solid ${Colors.blue0}; */
+    border-radius: 10px;
+   -webkit-box-shadow: 0px 0px 15px -4px #000000; 
+    box-shadow: 0px 0px 15px -4px #000000;
+
+   ul{
+    list-style: none;
+   }
+   li{
+    margin: 5px 0;
+   }
 `

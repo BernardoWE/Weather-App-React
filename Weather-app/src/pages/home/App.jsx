@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecast, WeatherGrid, DropdownDaysMenu
  } from './style.js'
 import WeatherInfoCard from '../../components/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
@@ -25,7 +25,9 @@ function App() {
   const [windSpeedUnit, setWindSpeedUnit] = useState('km/h')
   const [precipitationUnit, setPrecipitationUnit] = useState('mm')
   const [city, setCity] = useState('')
-  const [weatherData, setWeatherData] = useState('')
+  const [weatherData, setWeatherData] = useState('') 
+  const [isDaysMenuOpen, setIsDaysMenuOpen] = useState(false)
+  const [dayMenu, setDayMenu] = useState('Monday')
 
   const weatherCodes = {
   // Clear / sunny
@@ -274,9 +276,6 @@ function App() {
         </DropdownContainer>
       </Header>
 
-
-
-
       <h1>How's the sky looking today?</h1>
       <SearchContainer>
         <SearchInputWrapper htmlFor='search-input'>
@@ -285,61 +284,141 @@ function App() {
         </SearchInputWrapper>
         <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchContainer>
-      <WeatherInfoContainer>
-        <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature } units={weatherData?.current_units?.apparent_temperature} />
+      <WeatherGrid>
 
-        <WeatherInfoCard title='Humidity' value={weatherData?.current?.relative_humidity_2m} units={weatherData?.current_units?.relative_humidity_2m} />
+      
+        <TodayWeather>
+          
+        </TodayWeather>
+        <WeatherInfoContainer>
+          <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature } units={weatherData?.current_units?.apparent_temperature} />
 
-        <WeatherInfoCard title='Wind' value={weatherData?.current?.wind_speed_10m} units={weatherData?.current_units?.wind_speed_10m} />
+          <WeatherInfoCard title='Humidity' value={weatherData?.current?.relative_humidity_2m} units={weatherData?.current_units?.relative_humidity_2m} />
 
-        <WeatherInfoCard title='Precipitation' value={weatherData?.current?.precipitation} units={weatherData?.current_units?.precipitation} />
-      </WeatherInfoContainer>
+          <WeatherInfoCard title='Wind' value={weatherData?.current?.wind_speed_10m} units={weatherData?.current_units?.wind_speed_10m} />
 
-        <h2>Daily forecast</h2>
+          <WeatherInfoCard title='Precipitation' value={weatherData?.current?.precipitation} units={weatherData?.current_units?.precipitation} />
+        </WeatherInfoContainer>
+
+          <h2>Daily forecast</h2>
         <DailyForecastContainer>
 
-       
-      {weatherData?.daily?.time.map( (day, index) => {
-        const dayName = new Date(day).toLocaleDateString(
-    "en-US",
-    { weekday: "short" }
-  )
-        return(
-      <DailyForecast  
-      key={day} >
+        
+          {weatherData?.daily?.time.map( (day, index) => {
+              const dayName = new Date(day).toLocaleDateString(
+          "en-US",
+          { weekday: "short" }
+        )
+              return(
+            <DailyForecast  
+            key={day} >
+              
+              <p>{dayName}</p>
+              
+              <img src={weatherCodes[weatherData.daily.weather_code[index]].image} alt="" />
+                {/* <img src={SunnyIcon} alt="" /> */}
+                <div className='daily-div-temperature'>
+                  <p>
+                    
+                    {`${Math.round(weatherData.daily.temperature_2m_max[index])}°`}
+                    {/* {weatherData.daily_units.temperature_2m_max} */}
+                  </p>
+                  <p>
+                    
+                    {`${Math.round(weatherData.daily.temperature_2m_min[index])}°`}
+                    {/* {weatherData.daily_units.temperature_2m_min} */}
+                  </p>
+                </div>
+             
 
-        <p>{dayName}</p>
-        <img src={weatherCodes[weatherData.daily.weather_code[index]].image} alt="" />
-          {/* <img src={SunnyIcon} alt="" /> */}
-        <p>
+            </DailyForecast>
+          )})}
+        </DailyForecastContainer>
+        <HourlyForecast>
+          <div className='hourly-header'>
+            <h2>Hourly forecast</h2>
+            <ButtonUnits onClick={() => setIsDaysMenuOpen(!isDaysMenuOpen)}>
+
+              <span>
+                  
+                {dayMenu}
+              </span>
+        
+            </ButtonUnits >
+          </div>
           
-          {weatherData.daily.temperature_2m_max[index]}
-          {weatherData.daily_units.temperature_2m_max}
-        </p>
-        <p>
-          
-          {weatherData.daily.temperature_2m_min[index]}
-          {weatherData.daily_units.temperature_2m_min}
-        </p>
+          {isDaysMenuOpen &&<DropdownDaysMenu >
+            
+             
+                <ul>
+                  <li>
+                    <Button onClick={()=> setDayMenu('Monday')}>
+                      Monday
+                    </Button>
+                  </li>
+                  <li>
+                   <Button onClick={()=> setDayMenu('Tuesday')}>
+                      Tuesday
+                    </Button>
+                  </li>
+                  <li>
+                   <Button onClick={()=> setDayMenu('Wednesday')}>
+                      Wednesday
+                    </Button>
+                  </li>
+                  <li>
+                    <Button onClick={()=> setDayMenu('Thursday')}>
+                      Thursday
+                    </Button>
+                  </li>
+                  <li>
+                    <Button onClick={()=> setDayMenu('Friday')}>
+                      Friday
+                    </Button>
+                  </li>
+                  <li>
+                   <Button onClick={()=> setDayMenu('Saturday')}>
+                      Saturday
+                    </Button>
+                  </li>
+                  <li>
+                   <Button onClick={()=> setDayMenu('Sunday')}>
+                      Sunday
+                    </Button>
+                  </li>
+                </ul>
+                
+              
+            </DropdownDaysMenu>}
+          {weatherData?.daily?.time.map( (day, index) => {
+              const dayName = new Date(day).toLocaleDateString(
+          "en-US",
+          { weekday: "short" }
+        )
+              return(
+            <DailyForecast  
+            key={day} >
 
-      </DailyForecast>
-    )})}
-     </DailyForecastContainer>
+              <p>{dayName}</p>
+              <img src={weatherCodes[weatherData.daily.weather_code[index]].image} alt="" />
+                {/* <img src={SunnyIcon} alt="" /> */}
+              <p>
+                
+                {weatherData.daily.temperature_2m_max[index]}
+                {weatherData.daily_units.temperature_2m_max}
+              </p>
+              <p>
+                
+                {weatherData.daily.temperature_2m_min[index]}
+                {weatherData.daily_units.temperature_2m_min}
+              </p>
 
-          {/* <div style={{backgroundColor:'red', width:'100px', height:'100px'}}>
-              <p>{weatherData?.daily?.temperature_2m_max[0]}</p>
-              <p><strong>{weatherData?.daily?.temperature_2m_min[0]} </strong></p>
-          </div> */}
-      Wind
-      {/* <!-- Insert wind here -->    */}
+            </DailyForecast>
+          )})}
+        </HourlyForecast>
+      </WeatherGrid>
 
-      Precipitation
-      {/* <!-- Insert precipitation here --> */}
-
-      Daily forecast
-      {/* <!-- Insert daily forecast for the next 7 days here --> */}
-
-      Hourly forecast
+      
       {/* <!-- Insert hourly forecast for the selected day here --> */}
     </Main>
   )
