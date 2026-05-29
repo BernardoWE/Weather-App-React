@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast,ButtonDays
  } from './style.js'
 import WeatherInfoCard from '../../components/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
@@ -291,13 +291,19 @@ function App() {
           
         </TodayWeather>
         <WeatherInfoContainer>
-          <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature } units={weatherData?.current_units?.apparent_temperature} />
+          <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature ? Math.round(weatherData?.current?.apparent_temperature) : '---' } units={weatherData?.current_units?.apparent_temperature} />
 
-          <WeatherInfoCard title='Humidity' value={weatherData?.current?.relative_humidity_2m} units={weatherData?.current_units?.relative_humidity_2m} />
+          <WeatherInfoCard title='Humidity' 
+          value={weatherData?.current?.relative_humidity_2m ? weatherData?.current?.relative_humidity_2m : '---' } 
+          units={weatherData?.current_units?.relative_humidity_2m} />
 
-          <WeatherInfoCard title='Wind' value={weatherData?.current?.wind_speed_10m} units={weatherData?.current_units?.wind_speed_10m} />
+          <WeatherInfoCard title='Wind' 
+          value={weatherData?.current?.wind_speed_10m ? Math.round(weatherData?.current?.wind_speed_10m) : '---' } 
+          units={weatherData?.current_units?.wind_speed_10m} />
 
-          <WeatherInfoCard title='Precipitation' value={weatherData?.current?.precipitation} units={weatherData?.current_units?.precipitation} />
+          <WeatherInfoCard title='Precipitation' 
+          value={weatherData?.current?.precipitation !== undefined ? weatherData?.current?.precipitation: '---'} 
+          units={weatherData?.current_units?.precipitation} />
         </WeatherInfoContainer>
 
           
@@ -337,14 +343,14 @@ function App() {
         <HourlyForecastContainer>
           <div className='hourly-header'>
             <h2>Hourly forecast</h2>
-            <ButtonUnits onClick={() => setIsDaysMenuOpen(!isDaysMenuOpen)}>
+            <ButtonDays onClick={() => setIsDaysMenuOpen(!isDaysMenuOpen)}>
 
               <span>
                   
                 {dayMenu}
               </span>
-        
-            </ButtonUnits >
+            <img src={IconDropdown} alt="Dropdown icon" />
+            </ButtonDays >
           </div>
           
           {isDaysMenuOpen &&<DropdownDaysMenu >
@@ -391,7 +397,7 @@ function App() {
               
             </DropdownDaysMenu>}
 
-          {weatherData?.hourly?.time.slice(0,7).map( (time, index) => {
+          {weatherData?.hourly?.time.slice(0,8).map( (time, index) => {
               const hour = new Date(time).toLocaleTimeString(
           "en-US",
           { hour: "numeric",
@@ -401,14 +407,15 @@ function App() {
             <HourlyForecast
             key={time} >
 
-             
-              <img src={weatherCodes[weatherData.hourly.weather_code[index]].image} alt="" />
-                {/* <img src={SunnyIcon} alt="" /> */}
-                 <p>{hour}</p>
+              <div>
+                <img src={weatherCodes[weatherData.hourly.weather_code[index]].image} alt="" />
+                  
+                <p>{hour}</p>
+              </div>
               <p>
                 
-                {weatherData.hourly.temperature_2m[index]}
-                {/* {weatherData.daily_units.temperature_2m_max} */}
+                {Math.round(weatherData.hourly.temperature_2m[index])}°
+               
               </p>
              
 

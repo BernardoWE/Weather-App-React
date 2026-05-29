@@ -148,6 +148,12 @@ export const WeatherInfoContainer = styled.div`
     flex-wrap: wrap;
     grid-area: 3 / 1 / 4 / 4;
 `
+export const DailyForecastContainer = styled.div`
+    display: flex;
+    gap:1em;
+    flex-wrap: wrap;
+    grid-area: 4 / 1 / 6 / 4;
+`
 export const DailyForecast = styled.div`
     display: flex;
     flex-direction: column;
@@ -171,12 +177,7 @@ export const DailyForecast = styled.div`
         width: 70px;
     }
 `
-export const DailyForecastContainer = styled.div`
-display: flex;
-gap:1em;
-flex-wrap: wrap;
- grid-area: 4 / 1 / 6 / 4;
-`
+
 export const TodayWeather = styled.div`
     background-image: url(${todayBg});
     background-repeat: no-repeat;
@@ -186,24 +187,73 @@ export const TodayWeather = styled.div`
     height: 280px;
     border-radius: 20px;
 `
-export const HourlyForecastContainer = styled.div`
-    grid-area: 1 / 4 / 6 / 6;
-    background-color: ${Colors.blue800};
-    border-radius: 10px;
-    padding: 1rem;
-    position: relative;
-    .hourly-header{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-`
+
 export const WeatherGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     /* grid-template-rows: repeat(4, 1fr); */
     gap: 30px;
     margin-top: 2rem;
+`
+
+export const HourlyForecastContainer = styled.div`
+    grid-area: 1 / 4 / 6 / 6;
+    background-color: ${Colors.blue800};
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .hourly-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h2{
+            
+        font-size: 1.2em;
+        color: #fff;
+    
+        }
+    }
+`
+export const HourlyForecast = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: ${Colors.blue700};
+    border-radius: 10px;
+    margin: 5px 0;
+    padding-inline: .5em;
+    color: ${Colors.blue0};
+    flex: 1;
+    div{
+        display: flex;
+        align-items: center;
+    }
+     img{
+        width: 50px;
+    }
+    
+    
+`
+export const ButtonDays = styled.button`
+display: flex;
+    background-color: ${Colors.blue600};
+    border: none;
+    border-radius: 10px;
+    padding: .5rem 1em;
+    gap: .9em;
+    /* width: 100%; */
+    color: ${Colors.blue0};
+    cursor: pointer;
+    &:hover{
+        background-color: ${Colors.blue700};
+        
+    }
+    span{
+        display: flex;
+        gap: .7em;
+    }
 `
 export const DropdownDaysMenu = styled.div`
     display: flex;
@@ -227,18 +277,4 @@ export const DropdownDaysMenu = styled.div`
    li{
     margin: 5px 0;
    }
-`
-export const HourlyForecast = styled.div`
-display: flex;
-    
-    align-items: center;
-    background-color: ${Colors.blue700};
-    border-radius: 10px;
-    margin: 5px 0;
-    color: ${Colors.blue0};
-    flex: 1;
-     img{
-        width: 50px;
-    }
-    
 `
