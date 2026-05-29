@@ -18,7 +18,7 @@ export const Main = styled.main`
         color: ${Colors.blue0};
         margin: 0 auto;
         width: fit-content;
-        font-size: 4rem;
+        font-size: 3rem;
     }
     
 `
@@ -28,6 +28,7 @@ export const Header = styled.header`
 `
 export const DropdownContainer = styled.div`
     position: relative;
+    z-index: 2;
    
 `
 export const DropdownMenu = styled.div`
@@ -158,6 +159,7 @@ export const DailyForecast = styled.div`
     color: ${Colors.blue0};
     flex: 1;
     min-width: 100px;
+    min-height: 200px;
     flex-wrap: wrap;
     .daily-div-temperature{
         display: flex;
@@ -180,16 +182,17 @@ export const TodayWeather = styled.div`
     background-size: cover;
     background-position: center;
     grid-area: 1 / 1 / 3 / 4;
-    height: 300px;
+    height: 280px;
     border-radius: 20px;
 `
-export const HourlyForecast = styled.div`
+export const HourlyForecastContainer = styled.div`
     grid-area: 1 / 4 / 6 / 6;
     background-color: ${Colors.blue800};
     border-radius: 10px;
     padding: 1rem;
     /* margin: 0.5rem; */
     position: relative;
+    /* z-index: 1; */
     .hourly-header{
         display: flex;
         align-items: center;
@@ -201,6 +204,7 @@ export const WeatherGrid = styled.div`
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 30px;
+    margin-top: 3rem;
 `
 export const DropdownDaysMenu = styled.div`
     display: flex;
@@ -211,6 +215,7 @@ export const DropdownDaysMenu = styled.div`
     top: 70px;
     right: 0;
     padding: 10px;
+    z-index: 999;
     background-color: ${Colors.blue800};
    /* border: 1px solid ${Colors.blue0}; */
     border-radius: 10px;
@@ -223,4 +228,22 @@ export const DropdownDaysMenu = styled.div`
    li{
     margin: 5px 0;
    }
+`
+export const HourlyForecast = styled.div`
+display: flex;
+    /* flex-direction: column; */
+    
+    align-items: center;
+    background-color: ${Colors.blue800};
+    border-radius: 10px;
+    padding: 1rem;
+    /* margin: 0.5rem; */
+    color: ${Colors.blue0};
+    flex: 1;
+    /* min-width: 100px; */
+    /* flex-wrap: wrap; */
+     img{
+        width: 70px;
+    }
+    
 `

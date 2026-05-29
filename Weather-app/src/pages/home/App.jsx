@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecast, WeatherGrid, DropdownDaysMenu
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast
  } from './style.js'
 import WeatherInfoCard from '../../components/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
@@ -153,7 +153,7 @@ function App() {
   const longitude = geoData.results[0].longitude
 
    const weatherResponse = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,precipitation&temperature_unit=${isImperial ? 'fahrenheit' : 'celsius'}&windspeed_unit=${isImperial ? 'mph' : 'kmh'}&precipitation_unit=${isImperial ? 'inch' : 'mm'}&timezone=auto`
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,weather_code&temperature_unit=${isImperial ? 'fahrenheit' : 'celsius'}&windspeed_unit=${isImperial ? 'mph' : 'kmh'}&precipitation_unit=${isImperial ? 'inch' : 'mm'}&timezone=auto`
   )
   
   const dataResponse = await weatherResponse.json()
@@ -300,7 +300,7 @@ function App() {
           <WeatherInfoCard title='Precipitation' value={weatherData?.current?.precipitation} units={weatherData?.current_units?.precipitation} />
         </WeatherInfoContainer>
 
-          <h2>Daily forecast</h2>
+          
         <DailyForecastContainer>
 
         
@@ -334,7 +334,7 @@ function App() {
             </DailyForecast>
           )})}
         </DailyForecastContainer>
-        <HourlyForecast>
+        <HourlyForecastContainer>
           <div className='hourly-header'>
             <h2>Hourly forecast</h2>
             <ButtonUnits onClick={() => setIsDaysMenuOpen(!isDaysMenuOpen)}>
@@ -390,32 +390,31 @@ function App() {
                 
               
             </DropdownDaysMenu>}
-          {weatherData?.daily?.time.map( (day, index) => {
-              const dayName = new Date(day).toLocaleDateString(
+
+          {weatherData?.hourly?.time.slice(0,7).map( (time, index) => {
+              const hour = new Date(time).toLocaleTimeString(
           "en-US",
-          { weekday: "short" }
+          { hour: "numeric",
+        hour12: true}
         )
               return(
-            <DailyForecast  
-            key={day} >
+            <HourlyForecast
+            key={time} >
 
-              <p>{dayName}</p>
-              <img src={weatherCodes[weatherData.daily.weather_code[index]].image} alt="" />
+             
+              <img src={weatherCodes[weatherData.hourly.weather_code[index]].image} alt="" />
                 {/* <img src={SunnyIcon} alt="" /> */}
+                 <p>{hour}</p>
               <p>
                 
-                {weatherData.daily.temperature_2m_max[index]}
-                {weatherData.daily_units.temperature_2m_max}
+                {weatherData.hourly.temperature_2m[index]}
+                {/* {weatherData.daily_units.temperature_2m_max} */}
               </p>
-              <p>
-                
-                {weatherData.daily.temperature_2m_min[index]}
-                {weatherData.daily_units.temperature_2m_min}
-              </p>
+             
 
-            </DailyForecast>
+            </HourlyForecast>
           )})}
-        </HourlyForecast>
+        </HourlyForecastContainer>
       </WeatherGrid>
 
       
