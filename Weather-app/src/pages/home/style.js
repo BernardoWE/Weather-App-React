@@ -12,7 +12,7 @@ export const Colors = {
     lightBlue700:'hsl(248, 70%, 36%)',
 }
 export const Main = styled.main`
-    padding: 3rem 5rem;
+    padding: 2rem 5rem;
     min-height: 100vh ;
     h1{
         color: ${Colors.blue0};
@@ -144,6 +144,7 @@ export const SearchButton = styled.button`
 `
 export const WeatherInfoContainer = styled.div`
     display: flex;
+    gap: 1em;
     flex-wrap: wrap;
     grid-area: 3 / 1 / 4 / 4;
 `
@@ -159,7 +160,7 @@ export const DailyForecast = styled.div`
     color: ${Colors.blue0};
     flex: 1;
     min-width: 100px;
-    min-height: 200px;
+    /* min-height: 200px; */
     flex-wrap: wrap;
     .daily-div-temperature{
         display: flex;
@@ -190,9 +191,7 @@ export const HourlyForecastContainer = styled.div`
     background-color: ${Colors.blue800};
     border-radius: 10px;
     padding: 1rem;
-    /* margin: 0.5rem; */
     position: relative;
-    /* z-index: 1; */
     .hourly-header{
         display: flex;
         align-items: center;
@@ -202,9 +201,9 @@ export const HourlyForecastContainer = styled.div`
 export const WeatherGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    /* grid-template-rows: repeat(4, 1fr); */
     gap: 30px;
-    margin-top: 3rem;
+    margin-top: 2rem;
 `
 export const DropdownDaysMenu = styled.div`
     display: flex;
@@ -231,19 +230,15 @@ export const DropdownDaysMenu = styled.div`
 `
 export const HourlyForecast = styled.div`
 display: flex;
-    /* flex-direction: column; */
     
     align-items: center;
-    background-color: ${Colors.blue800};
+    background-color: ${Colors.blue700};
     border-radius: 10px;
-    padding: 1rem;
-    /* margin: 0.5rem; */
+    margin: 5px 0;
     color: ${Colors.blue0};
     flex: 1;
-    /* min-width: 100px; */
-    /* flex-wrap: wrap; */
      img{
-        width: 70px;
+        width: 50px;
     }
     
 `
