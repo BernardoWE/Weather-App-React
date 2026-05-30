@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast,ButtonDays
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast,ButtonDays, SearchResultsContainer, SearchResults, ButtonResults
  } from './style.js'
 import WeatherInfoCard from '../../components/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
@@ -28,7 +28,7 @@ function App() {
   const [weatherData, setWeatherData] = useState('') 
   const [isDaysMenuOpen, setIsDaysMenuOpen] = useState(false)
   const [dayMenu, setDayMenu] = useState('Monday')
-
+  const [geoDataPlaces, setGeoDataPlaces] = useState('')
   const weatherCodes = {
   // Clear / sunny
   0: {
@@ -146,9 +146,11 @@ function App() {
 
   async function handleSearch() {
      const geoResponse = await fetch(
-    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
+    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=5`
   )
   const geoData = await geoResponse.json()
+  setGeoDataPlaces(geoData)
+  console.log(geoData)
   const latitude = geoData.results[0].latitude
   const longitude = geoData.results[0].longitude
 
@@ -278,10 +280,21 @@ function App() {
 
       <h1>How's the sky looking today?</h1>
       <SearchContainer>
-        <SearchInputWrapper htmlFor='search-input'>
-          <img src={IconSearch} alt="Search icon" />
-          <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" value={city} onChange={(e) => setCity(e.target.value)} />
-        </SearchInputWrapper>
+        <div className='search-area'>
+          <SearchInputWrapper htmlFor='search-input'>
+            <img src={IconSearch} alt="Search icon" />
+            <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" value={city} onChange={(e) => setCity(e.target.value)} />
+          </SearchInputWrapper>
+          {geoDataPlaces &&<SearchResultsContainer>
+            { geoDataPlaces?.results?.map( (place, index) => {
+            return(
+              <SearchResults key={place.id}>
+                <ButtonResults>{place.name}, {place.country}</ButtonResults>
+                
+              </SearchResults>
+            )})}
+          </SearchResultsContainer>}
+        </div>
         <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchContainer>
       <WeatherGrid>

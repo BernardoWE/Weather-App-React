@@ -98,6 +98,14 @@ export const SearchContainer = styled.div`
     gap: 1rem;
     justify-content: center;
     margin-top: 2rem;
+    
+    
+    .search-area{
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        position: relative;
+    }
 `
 export const SearchInputWrapper = styled.label`
     display: flex;
@@ -109,6 +117,7 @@ export const SearchInputWrapper = styled.label`
     cursor: text;
     flex-shrink: 0;
     width: clamp(200px, 50vw, 500px);
+    
     /* width: 500px; */
     &:hover{
         background-color: ${Colors.blue700};
@@ -141,6 +150,45 @@ export const SearchButton = styled.button`
         transform: scale(0.
             98);
     }
+`
+export const SearchResultsContainer = styled.div`
+background-color: ${Colors.blue800};
+    border-radius: 10px;
+    /* padding: 1rem; */
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 8px);
+    width: 100%;
+`
+export const SearchResults = styled.div`
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: ${Colors.blue700}; */
+    border-radius: 10px;
+    margin: 5px 0;
+    padding-inline: .5em;
+    color: ${Colors.blue0};
+    flex: 1;
+    
+`
+export const ButtonResults = styled.button`
+ display: flex;
+    justify-content: space-between;
+    background-color:  transparent;
+    border: none;
+    width: 100%;
+    color: ${Colors.blue0};
+    border-radius: 8px;
+    padding: .5rem;
+    cursor: pointer ;
+    &:hover{
+        background-color: ${Colors.blue700};
+    }
+    /* &:focus{
+        ${props => props.$isActive ? `1px solid #fff` : `none`};
+    } */
 `
 export const WeatherInfoContainer = styled.div`
     display: flex;
