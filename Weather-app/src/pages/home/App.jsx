@@ -29,8 +29,8 @@ function App() {
   const [isDaysMenuOpen, setIsDaysMenuOpen] = useState(false)
   const [dayMenu, setDayMenu] = useState('Monday')
   const [geoDataPlaces, setGeoDataPlaces] = useState('')
-  const [latitude, setLatitude] = useState()
-  const [longitude, setLongitude] = useState()
+  const [latitude, setLatitude] = useState('')
+  const [longitude, setLongitude] = useState('')
   const weatherCodes = {
   // Clear / sunny
   0: {
@@ -157,20 +157,26 @@ function App() {
   // const latitude = geoData.results[0].latitude
   // const longitude = geoData.results[0].longitude
 
-   const weatherResponse = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,weather_code&temperature_unit=${isImperial ? 'fahrenheit' : 'celsius'}&windspeed_unit=${isImperial ? 'mph' : 'kmh'}&precipitation_unit=${isImperial ? 'inch' : 'mm'}&timezone=auto`
+   
+  
+  }
+  async function handleSearchResults(place) {
+    // setLatitude( place.latitude)
+    // setLongitude( place.longitude)
+    
+    console.log(latitude)
+    const weatherResponse = await fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,weather_code&temperature_unit=${isImperial ? 'fahrenheit' : 'celsius'}&windspeed_unit=${isImperial ? 'mph' : 'kmh'}&precipitation_unit=${isImperial ? 'inch' : 'mm'}&timezone=auto`
   )
   
   const dataResponse = await weatherResponse.json()
   console.log(dataResponse)
   
   setWeatherData(dataResponse)
-  
+  setGeoDataPlaces('')
+  // setLatitude( '')
+  //   setLongitude( '')
   }
-  // async function handleSearchResults(params) {
-    
-  // }
-  
   return (
     <Main>
 
@@ -296,7 +302,7 @@ function App() {
             { geoDataPlaces?.results?.map( (place, index) => {
             return(
               <SearchResults key={place.id}>
-                <ButtonResults onClick={setLongitude(geoDataPlaces.results[index].longitude)}>{place.name}, {place.country}</ButtonResults>
+                <ButtonResults onClick={() => handleSearchResults(place)}>{place.name}, {place.country}</ButtonResults>
                 
               </SearchResults>
             )})}
