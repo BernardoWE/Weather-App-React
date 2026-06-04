@@ -12,7 +12,10 @@ export const Colors = {
     lightBlue700:'hsl(248, 70%, 36%)',
 }
 export const Main = styled.main`
-    padding: 2rem 10rem;
+    padding: 2rem 1rem;
+    width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
     min-height: 100vh ;
     h1{
         color: ${Colors.blue0};
@@ -194,13 +197,15 @@ export const WeatherInfoContainer = styled.div`
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
-    grid-area: 3 / 1 / 4 / 4;
+    /* grid-area: 3 / 1 / 4 / 4; */
+    grid-area: weatherinfo;
 `
 export const DailyForecastContainer = styled.div`
     display: flex;
     gap:1em;
     flex-wrap: wrap;
-    grid-area: 4 / 1 / 6 / 4;
+    /* grid-area: 4 / 1 / 6 / 4; */
+    grid-area: daily;
 `
 export const DailyForecast = styled.div`
     display: flex;
@@ -232,7 +237,8 @@ export const TodayWeather = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    grid-area: 1 / 1 / 3 / 4;
+    /* grid-area: 1 / 1 / 3 / 4; */
+    grid-area: todayweather;
     min-height: 280px;
     border-radius: 20px;
     
@@ -269,14 +275,38 @@ export const TodayWeather = styled.div`
 
 export const WeatherGrid = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 2fr 1fr;
     /* grid-template-rows: repeat(4, 1fr); */
+    grid-template-areas:
+    "todayweather hourly"
+    "weatherinfo  hourly"
+    "daily  hourly"
+        ;
+
     gap: 30px;
     margin-top: 2rem;
+   @media (max-width: 900px) {
+        /* grid-template-columns: repeat(2, 1fr); */
+         /* grid-template-areas:
+    "todayweather hourly"
+    "weatherinfo  hourly"
+    "daily  hourly"
+        ; */
+    }
+    @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "todayweather"
+    "weatherinfo "
+    "daily "
+    "hourly"
+        ;
+}
 `
 
 export const HourlyForecastContainer = styled.div`
-    grid-area: 1 / 4 / 6 / 6;
+    /* grid-area: 1 / 4 / 6 / 6; */
+    grid-area: hourly;
     background-color: ${Colors.blue800};
     border-radius: 10px;
     padding: 1rem;
