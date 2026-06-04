@@ -31,6 +31,7 @@ function App() {
   const [geoDataPlaces, setGeoDataPlaces] = useState('')
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
+  const [currentPlace, setCurrentPlace] = useState([])
   const weatherCodes = {
   // Clear / sunny
   0: {
@@ -146,6 +147,13 @@ function App() {
   }
   }
 
+    
+  const currentIndex = weatherData?.hourly?.time?.findIndex(
+  hora => hora === weatherData?.current?.time
+)
+
+console.log(currentIndex)
+
   async function handleSearch() {
      const geoResponse = await fetch(
     `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=5`
@@ -173,10 +181,18 @@ function App() {
   console.log(dataResponse)
   
   setWeatherData(dataResponse)
+
+
+
+
+  // const now = new Date(weatherData.hourly.time[0])
+  // console.log(now)
   setGeoDataPlaces('')
   // setLatitude( '')
   //   setLongitude( '')
   }
+
+  
   return (
     <Main>
 
@@ -302,7 +318,9 @@ function App() {
             { geoDataPlaces?.results?.map( (place, index) => {
             return(
               <SearchResults key={place.id}>
-                <ButtonResults onClick={() => handleSearchResults(place)}>{place.name}, {place.country}</ButtonResults>
+                <ButtonResults onClick={() => {handleSearchResults(place)
+                  setCurrentPlace([place.name,place.country])
+                }}>{place.name}, {place.country}</ButtonResults>
                 
               </SearchResults>
             )})}
@@ -312,23 +330,44 @@ function App() {
       </SearchContainer>
       <WeatherGrid>
 
-      
         <TodayWeather>
-          
+          <div className='container-today-weather'>
+            <div>
+              <h2>
+                {weatherData ? `${currentPlace[0]}, ${currentPlace[1]}` : null}
+              </h2>
+              <p>
+                {weatherData ? new Date(weatherData?.current?.time).toLocaleDateString(
+                "en-US",{ 
+                  month: "short",
+                  weekday: "long",
+                  day:"numeric",
+                  year:"numeric"
+                }): null
+                }
+              </p>
+            </div>
+            <div>
+              {weatherData ? 
+              <img src={weatherCodes[weatherData?.current?.weather_code].image} alt="" />
+              : null}
+              <p>{weatherData ? `${Math.round(weatherData?.current?.temperature_2m)}°`: null}</p>
+            </div>
+          </div>
         </TodayWeather>
         <WeatherInfoContainer>
-          <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature ? Math.round(weatherData?.current?.apparent_temperature) : '---' } units={weatherData?.current_units?.apparent_temperature} />
+          <WeatherInfoCard title='Feels like' value={weatherData?.current?.apparent_temperature ? Math.round(weatherData?.current?.apparent_temperature) : '--' } units={weatherData?.current_units?.apparent_temperature} />
 
           <WeatherInfoCard title='Humidity' 
-          value={weatherData?.current?.relative_humidity_2m ? weatherData?.current?.relative_humidity_2m : '---' } 
+          value={weatherData?.current?.relative_humidity_2m ? weatherData?.current?.relative_humidity_2m : '--' } 
           units={weatherData?.current_units?.relative_humidity_2m} />
 
           <WeatherInfoCard title='Wind' 
-          value={weatherData?.current?.wind_speed_10m ? Math.round(weatherData?.current?.wind_speed_10m) : '---' } 
+          value={weatherData?.current?.wind_speed_10m ? Math.round(weatherData?.current?.wind_speed_10m) : '--' } 
           units={weatherData?.current_units?.wind_speed_10m} />
 
           <WeatherInfoCard title='Precipitation' 
-          value={weatherData?.current?.precipitation !== undefined ? weatherData?.current?.precipitation: '---'} 
+          value={weatherData?.current?.precipitation !== undefined ? weatherData?.current?.precipitation: '--'} 
           units={weatherData?.current_units?.precipitation} />
         </WeatherInfoContainer>
 
@@ -341,6 +380,8 @@ function App() {
           "en-US",
           { weekday: "short" }
         )
+
+        
               return(
             <DailyForecast  
             key={day} >
@@ -423,7 +464,7 @@ function App() {
               
             </DropdownDaysMenu>}
 
-          {weatherData?.hourly?.time.slice(0,8).map( (time, index) => {
+          {weatherData?.hourly?.time.slice(/* currentIndex, currentIndex + 8 */0,8).map( (time, index) => {
               const hour = new Date(time).toLocaleTimeString(
           "en-US",
           { hour: "numeric",

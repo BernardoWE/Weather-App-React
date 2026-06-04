@@ -12,7 +12,7 @@ export const Colors = {
     lightBlue700:'hsl(248, 70%, 36%)',
 }
 export const Main = styled.main`
-    padding: 2rem 5rem;
+    padding: 2rem 10rem;
     min-height: 100vh ;
     h1{
         color: ${Colors.blue0};
@@ -216,6 +216,7 @@ export const DailyForecast = styled.div`
     min-width: 100px;
     /* min-height: 200px; */
     flex-wrap: wrap;
+    /* height: 144px; */
     .daily-div-temperature{
         display: flex;
         justify-content: space-between;
@@ -232,8 +233,38 @@ export const TodayWeather = styled.div`
     background-size: cover;
     background-position: center;
     grid-area: 1 / 1 / 3 / 4;
-    height: 280px;
+    min-height: 280px;
     border-radius: 20px;
+    
+    .container-today-weather{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    justify-content: space-between;
+   padding: 2em;
+   div:nth-child(2){
+    display:  flex;
+    align-items: center;
+    gap: 2em;
+    p{
+        color: ${Colors.blue0};
+    font-size: 5em;
+    }
+   }
+   h2{
+    color: ${Colors.blue0};
+    font-size: 2em;
+   }
+    div:nth-child(1) p{
+    color: ${Colors.blue0};
+    opacity: .6;
+    margin-top: .7em;
+   }
+    img{
+        width: 90px;
+    }
+    }
 `
 
 export const WeatherGrid = styled.div`
