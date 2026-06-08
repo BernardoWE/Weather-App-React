@@ -147,12 +147,12 @@ function App() {
   }
   }
 
-    
-  const currentIndex = weatherData?.hourly?.time?.findIndex(
-  hora => hora === weatherData?.current?.time
+    const currentHour = weatherData ? new Date(weatherData.current.time).getHours(): null
+const currentIndex = weatherData?.hourly?.time?.findIndex(
+  hora => new Date(hora).getHours() === currentHour
 )
+  
 
-console.log(currentIndex)
 
   async function handleSearch() {
      const geoResponse = await fetch(
@@ -184,12 +184,7 @@ console.log(currentIndex)
 
 
 
-
-  // const now = new Date(weatherData.hourly.time[0])
-  // console.log(now)
   setGeoDataPlaces('')
-  // setLatitude( '')
-  //   setLongitude( '')
   }
 
   
@@ -376,9 +371,12 @@ console.log(currentIndex)
 
         
           {weatherData?.daily?.time.map( (day, index) => {
-              const dayName = new Date(day).toLocaleDateString(
+            console.log(day)
+console.log(new Date(`${day}T12:00:00`))
+              const dayName = new Date(`${day}T12:00:00`).toLocaleDateString(
           "en-US",
           { weekday: "short" }
+          
         )
 
         
@@ -464,7 +462,7 @@ console.log(currentIndex)
               
             </DropdownDaysMenu>}
 
-          {weatherData?.hourly?.time.slice(/* currentIndex, currentIndex + 8 */0,8).map( (time, index) => {
+          {weatherData?.hourly?.time.slice(currentIndex, currentIndex + 8).map( (time, index) => {
               const hour = new Date(time).toLocaleTimeString(
           "en-US",
           { hour: "numeric",
