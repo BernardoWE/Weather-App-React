@@ -247,7 +247,8 @@ export const TodayWeather = styled.div`
     display: flex;
     align-items: center;
     min-height: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
    padding: 2em;
    div:nth-child(2){
     display:  flex;
@@ -275,7 +276,7 @@ export const TodayWeather = styled.div`
 
 export const WeatherGrid = styled.div`
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     /* grid-template-rows: repeat(4, 1fr); */
     grid-template-areas:
     "todayweather hourly"

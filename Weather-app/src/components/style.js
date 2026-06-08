@@ -7,7 +7,7 @@ export const Card = styled.div`
     /* margin: 0.5rem; */
     color: ${Colors.blue0};
     
-    flex: 1;
+    flex: 1 1 100px;
     p:first-of-type{
         margin-bottom: 1em;
         opacity: .6;
