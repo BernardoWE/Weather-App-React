@@ -101,13 +101,16 @@ export const SearchContainer = styled.div`
     gap: 1rem;
     justify-content: center;
     margin-top: 2rem;
-    
+    flex-wrap: wrap;
+    width: fit-content;
+    margin: 2rem auto;
     
     .search-area{
         display: flex;
-        flex-direction: column;
+        /* flex-direction: column; */
         gap: 1em;
         position: relative;
+        flex: 1;
     }
 `
 export const SearchInputWrapper = styled.label`
@@ -119,6 +122,7 @@ export const SearchInputWrapper = styled.label`
     gap:0.5rem;
     cursor: text;
     flex-shrink: 0;
+    flex: 1;
     width: clamp(200px, 50vw, 500px);
     
     /* width: 500px; */
@@ -143,6 +147,7 @@ export const SearchButton = styled.button`
     border-radius: 10px;
     color: ${Colors.blue0};
     padding: .8rem 1.5rem;
+    flex: 1;
     cursor: pointer;
     transition: background-color 0.3s ease;
     &:hover{
