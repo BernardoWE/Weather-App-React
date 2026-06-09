@@ -123,7 +123,7 @@ export const SearchInputWrapper = styled.label`
     cursor: text;
     flex-shrink: 0;
     flex: 1;
-    width: clamp(200px, 50vw, 500px);
+    width: clamp(300px, 50vw, 500px);
     img{
         pointer-events: none;
         user-select: none;
