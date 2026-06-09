@@ -6,14 +6,14 @@ A modern weather application built with React that allows users to search for ci
 
 ### Desktop
 <p align="center">
-  <img src="./Weather-app/src/screenshots/desktop.png" width="800">
+  <img src="./src/screenshots/desktop.png" width="800">
 </p>
 
 
 ### Mobile
 
 <p align="center">
-  <img src="./Weather-app/src/screenshots/mobile.png" width="250">
+  <img src="./src/screenshots/mobile.png" width="250">
 </p>
 
 ## ✨ Features
