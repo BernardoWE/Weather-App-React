@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './style.js'
-import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast,ButtonDays, SearchResultsContainer, SearchResults, ButtonResults
+import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast,ButtonDays, SearchResultsContainer, SearchResults, ButtonResults, SearchErrorText
  } from './style.js'
 import WeatherInfoCard from '../../components/WeatherInfoCard/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
@@ -32,6 +32,7 @@ function App() {
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
   const [currentPlace, setCurrentPlace] = useState([])
+  const [searchError, setSearchError] = useState('')
   const weatherCodes = {
   // Clear / sunny
   0: {
@@ -159,7 +160,13 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
     `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=5`
   )
   const geoData = await geoResponse.json()
-
+  if (!geoData.results) {
+    setSearchError("City not found")
+    setGeoDataPlaces('')
+    return
+  }else{
+    setSearchError('')
+  }
   setGeoDataPlaces(geoData)
   console.log(geoData)
   // const latitude = geoData.results[0].latitude
@@ -189,6 +196,7 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
 
   
   return (
+    
     <Main>
 
       <Header>
@@ -309,17 +317,34 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
             <img src={IconSearch} alt="Search icon" />
             <SearchInput id='search-input' type="text" placeholder="Search for a city, e.g., New York" value={city} onChange={(e) => setCity(e.target.value)} />
           </SearchInputWrapper>
-          {geoDataPlaces &&<SearchResultsContainer>
-            { geoDataPlaces?.results?.map( (place, index) => {
-            return(
-              <SearchResults key={place.id}>
-                <ButtonResults onClick={() => {handleSearchResults(place)
-                  setCurrentPlace([place.name,place.country])
-                }}>{place.name}, {place.country}</ButtonResults>
-                
-              </SearchResults>
-            )})}
-          </SearchResultsContainer>}
+          {
+  searchError ? (
+    <SearchResultsContainer>  <SearchResults>
+      <SearchErrorText>{searchError}</SearchErrorText>
+      
+    </SearchResults> </SearchResultsContainer>
+    
+  ) : (
+    geoDataPlaces && (
+      <SearchResultsContainer>
+        {geoDataPlaces?.results?.map((place) => {
+          return (
+            <SearchResults key={place.id}>
+              <ButtonResults
+                onClick={() => {
+                  handleSearchResults(place)
+                  setCurrentPlace([place.name, place.country])
+                }}
+              >
+                {place.name}, {place.country}
+              </ButtonResults>
+            </SearchResults>
+          )
+        })}
+      </SearchResultsContainer>
+    )
+  )
+}
         </div>
         <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchContainer>

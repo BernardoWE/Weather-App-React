@@ -182,6 +182,18 @@ display: flex;
     flex: 1;
     
 `
+export const SearchErrorText = styled.p`
+display: flex;
+    justify-content: space-between;
+    background-color:  transparent;
+    border: none;
+    width: 100%;
+    color: ${Colors.blue0};
+    border-radius: 8px;
+    padding: .5rem;
+    
+   
+`
 export const ButtonResults = styled.button`
  display: flex;
     justify-content: space-between;
