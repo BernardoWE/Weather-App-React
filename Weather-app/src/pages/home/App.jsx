@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './style.js'
 import { Main, Header, DropdownContainer, DropdownMenu, Button, ButtonUnits, SearchContainer, SearchInputWrapper, SearchInput, SearchButton, WeatherInfoContainer, DailyForecast, DailyForecastContainer, TodayWeather, HourlyForecastContainer, WeatherGrid, DropdownDaysMenu, HourlyForecast,ButtonDays, SearchResultsContainer, SearchResults, ButtonResults
  } from './style.js'
-import WeatherInfoCard from '../../components/index.jsx'
+import WeatherInfoCard from '../../components/WeatherInfoCard/index.jsx'
 import IconUnits from '../../assets/images/icon-units.svg'
 import IconDropdown from '../../assets/images/icon-dropdown.svg'
 import IconCheckMark from '../../assets/images/icon-checkmark.svg'

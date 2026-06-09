@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colors } from "../pages/home/style.js";
+import { Colors } from "../../pages/home/style.js";
 export const Card = styled.div`
     background-color: ${Colors.blue800};
     border-radius: 10px;
