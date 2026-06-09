@@ -168,7 +168,7 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
     setSearchError('')
   }
   setGeoDataPlaces(geoData)
-  console.log(geoData)
+  // console.log(geoData)
   // const latitude = geoData.results[0].latitude
   // const longitude = geoData.results[0].longitude
 
@@ -179,13 +179,13 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
     // setLatitude( place.latitude)
     // setLongitude( place.longitude)
     
-    console.log(latitude)
+    // console.log(latitude)
     const weatherResponse = await fetch(
     `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&hourly=temperature_2m,weather_code&temperature_unit=${isImperial ? 'fahrenheit' : 'celsius'}&windspeed_unit=${isImperial ? 'mph' : 'kmh'}&precipitation_unit=${isImperial ? 'inch' : 'mm'}&timezone=auto`
   )
   
   const dataResponse = await weatherResponse.json()
-  console.log(dataResponse)
+  // console.log(dataResponse)
   
   setWeatherData(dataResponse)
 
@@ -396,8 +396,8 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
 
         
           {weatherData?.daily?.time.map( (day, index) => {
-            console.log(day)
-console.log(new Date(`${day}T12:00:00`))
+            // console.log(day)
+// console.log(new Date(`${day}T12:00:00`))
               const dayName = new Date(`${day}T12:00:00`).toLocaleDateString(
           "en-US",
           { weekday: "short" }
