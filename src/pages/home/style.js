@@ -168,6 +168,7 @@ background-color: ${Colors.blue800};
     position: absolute;
     top: calc(100% + 8px);
     width: 100%;
+    z-index: 2;
 `
 export const SearchResults = styled.div`
 display: flex;
