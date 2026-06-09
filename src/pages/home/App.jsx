@@ -161,7 +161,7 @@ const currentIndex = weatherData?.hourly?.time?.findIndex(
   )
   const geoData = await geoResponse.json()
   if (!geoData.results) {
-    setSearchError("City not found")
+    setSearchError("No cities found with that name. Please try again.")
     setGeoDataPlaces('')
     return
   }else{
